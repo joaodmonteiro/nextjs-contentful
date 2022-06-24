@@ -16,14 +16,15 @@ export default function Article({ title, body }) {
     )
 }
 
-export async function getServerSideProps(context) {
+export async function getStaticProps(context) {
     const resp = await client.getEntry(context.params.articleID);
 
     return {
         props: {
             title: resp.fields.title,
             body: resp.fields.body
-        }
+        },
+        revalidate: 60
     }
 }
 
